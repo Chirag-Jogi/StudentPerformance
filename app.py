@@ -8,7 +8,12 @@ application=Flask(__name__)
 
 app=application
 ## Route for a home page
-@app.route('/',methods=['GET','POST'])
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
+@app.route('/predictdata',methods=['GET','POST'])
 def predict_datapoint():
     if request.method=='GET':
         return render_template('home.html')
@@ -29,9 +34,6 @@ def predict_datapoint():
         results=predict_pipeline.predict(pred_df)
         print(results)
         return render_template('home.html',results=results[0])
-
-
-
     
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8000) 
+if __name__=="__main__":
+    app.run(host="0.0.0.0")    
